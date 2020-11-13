@@ -23,6 +23,8 @@ Technical frontend assignment for Samaritan
 - wireframe + style w/ figma
 - sprites return 404 from pokeapi
   - https://pokeres.bastionbot.org/images/pokemon/###.png has modern sprites
+- pokemon num padStart
+- evil-icons.io
 
 ## Additional Considerations (implement as feature toggles)
 
@@ -39,6 +41,7 @@ Technical frontend assignment for Samaritan
 - 3D sprites
 - Next/prev navigation in details view
 - more capable filter
+- "quick view" (toggle)
 
 ---
 
