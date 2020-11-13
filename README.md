@@ -39,6 +39,7 @@ Technical frontend assignment for Samaritan
 - 3D sprites
 - Next/prev navigation in details view
 - more capable filter
+- "quick view" (toggle)
 
 ---
 
