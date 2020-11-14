@@ -33,4 +33,11 @@ module.exports = {
       filename: "./index.html",
     }),
   ],
+  devServer: {
+    historyApiFallback: true,
+  },
+  output: {
+    publicPath: "/",
+    filename: "main.js",
+  },
 };
