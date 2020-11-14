@@ -16,5 +16,6 @@ module.exports = {
   rules: {
     quotes: ["off", "double"],
     "react/button-has-type": "off",
+    "react/jsx-one-expression-per-line": "off",
   },
 };

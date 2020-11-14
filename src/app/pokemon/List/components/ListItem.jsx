@@ -10,8 +10,8 @@ const ListItem = ({ id, name }) => {
         <div className="img-placeholder" />
       </div>
       <div>
-        <div># 001</div>
-        <div>Bulbasaur</div>
+        <div># {String(id).padStart(3, "0")}</div>
+        <div>{name}</div>
       </div>
     </div>
   );
