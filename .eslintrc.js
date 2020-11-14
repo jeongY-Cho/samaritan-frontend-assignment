@@ -15,5 +15,6 @@ module.exports = {
   plugins: ["react"],
   rules: {
     quotes: ["off", "double"],
+    "react/button-has-type": "off",
   },
 };
