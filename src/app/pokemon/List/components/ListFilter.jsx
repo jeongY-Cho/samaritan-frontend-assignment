@@ -2,6 +2,8 @@ import React, { useCallback } from "react";
 import debounce from "lodash/debounce";
 import { useDispatch, useSelector } from "react-redux";
 
+import "./ListFilter.css";
+
 export function setFilter(value) {
   return {
     type: "filter::set-filter",
@@ -18,10 +20,11 @@ export default () => {
   }, []);
 
   return (
-    <div className="filter">
+    <div className="filter-container">
       <input
         type="text"
         placeholder="Search"
+        className="filter-input"
         value={filterValue}
         onChange={filterChangeCallback}
       />

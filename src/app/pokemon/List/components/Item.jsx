@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./ListItem.css";
+import "./Item.css";
 
 const ListItem = ({ id, name }) => {
   return (
@@ -9,9 +9,12 @@ const ListItem = ({ id, name }) => {
       <div>
         <div className="img-placeholder" />
       </div>
-      <div>
-        <div># {String(id).padStart(3, "0")}</div>
-        <div>{name}</div>
+      <div className="id-and-name">
+        <div style={{ "padding-right": 20 }}>
+          # <br />
+          {String(id).padStart(3, "0")}
+        </div>
+        <div style={{ wordBreak: "break-all" }}>{name}</div>
       </div>
     </div>
   );

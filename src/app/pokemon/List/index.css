@@ -5,13 +5,3 @@
   flex-direction: column;
   align-items: center;
 }
-
-.filter {
-}
-
-.pokemon-list {
-  display: flex;
-  flex-wrap: wrap;
-
-  max-width: 60vw;
-}

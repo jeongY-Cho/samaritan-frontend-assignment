@@ -1,7 +1,13 @@
 body {
-  background-color: #ebebeb;
+  background: linear-gradient(150deg, #e3bfbf, #bfb2fe);
   padding: 20px;
   margin: 0;
 
   font-family: "Lato", sans-serif;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
 }

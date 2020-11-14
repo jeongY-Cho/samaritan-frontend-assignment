@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import ListItem from "./ListItem";
+import ListItem from "./Item";
+
+import "./ListItems.css";
 
 export default () => {
   const filterValue = useSelector((state) => state.filter);
