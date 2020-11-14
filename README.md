@@ -46,3 +46,19 @@ Technical frontend assignment for Samaritan
 ---
 
 ## [Figma Wireframe](https://www.figma.com/file/DxO5kPOiwBBfHQwcBxWIk2/Samaritan-Pokedex)
+
+---
+
+## Project Decision Justifications
+
+### Bootstrap from zero:
+
+> Show that I understand and am able to use frameworks typically used in frontend web development.
+
+### Directory Structure:
+
+> I typically separate code into concerns, but wanted to try my hand at co-location / organizing by feature.
+
+### Global CSS over CSS modules, SASS, styled components, etc.
+
+> Since this is a small application, I felt that it would be largely unnecessary to concern myself with using anything more than native CSS. Along the same vein of reasoning, I am not concerned about clashes in this context.
