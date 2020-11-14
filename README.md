@@ -23,6 +23,7 @@ Technical frontend assignment for Samaritan
 - wireframe + style w/ figma
 - sprites return 404 from pokeapi
   - https://pokeres.bastionbot.org/images/pokemon/###.png has modern sprites
+- pokeapi is case sensitive. validate uri param.
 - pokemon num padStart
 - evil-icons.io
 
