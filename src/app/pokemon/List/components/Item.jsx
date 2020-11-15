@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 
 import "./Item.css";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import titleCase from "../../../../utils/titleCase";
 
-const ListItem = ({ id, name }) => {
+const ListItem = ({ name }) => {
   const history = useHistory();
+  const details = useSelector((state) => state.pokemon[name].details);
 
   const goToDetails = useCallback(() => {
     history.push(`/pokemon/${name}`);
@@ -14,7 +17,18 @@ const ListItem = ({ id, name }) => {
   return (
     <div className="pokemon-list-items">
       <div>
-        <div className="img-placeholder" />
+        {details.id ? (
+          <div>
+            <img
+              width="180px"
+              src={`https://pokeres.bastionbot.org/images/pokemon/${details.id}.png`}
+              alt={details.name}
+              style={{ filter: "drop-shadow(black 2px 7px 10px)" }}
+            />
+          </div>
+        ) : (
+          <div className="img-placeholder">Loading</div>
+        )}
       </div>
       <div
         className="id-and-name"
@@ -25,16 +39,17 @@ const ListItem = ({ id, name }) => {
       >
         <div style={{ "padding-right": 20 }}>
           # <br />
-          {String(id).padStart(3, "0")}
+          {String(details.id).padStart(3, "0")}
         </div>
-        <div style={{ wordBreak: "break-all" }}>{name}</div>
+        <div style={{ wordBreak: "break-all" }}>
+          {details.name && titleCase(details.name)}
+        </div>
       </div>
     </div>
   );
 };
 
 ListItem.propTypes = {
-  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 };
 
