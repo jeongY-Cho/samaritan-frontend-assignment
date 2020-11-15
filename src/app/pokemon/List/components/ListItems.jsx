@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import promiseRetry from "promise-retry";
 
+import { writeToCache, fetchFromCache } from "../../../../cache";
+
 import ListItem from "./Item";
 
 import "./ListItems.css";
@@ -41,13 +43,34 @@ function fetchPokemonList(page = 0) {
   });
 }
 
+// fetchPokemonDetails fetches details for each pokemon
+// first checks indexed db for cached details.
+// if cache miss, fetches then caches and returns fetched details
 function fetchPokemonDetails(name) {
   return promiseRetry(async (retry) => {
+    // check cache first
+    const cachedRes = await fetchFromCache(name);
+
+    // return cached object on cache hit
+    if (cachedRes) return cachedRes;
+    // don't need to check with api since we can safely assume, in this specific context,
+    // details won't change.
+    // For some production app, embed a timestamp into cached object and fetch if its older than some
+    // threshold.
+
+    // fetch from api on cache miss
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
 
+    // retry on some error
     if (!res.ok) retry();
 
-    return res.json();
+    const details = await res.json();
+
+    // cache newly fetched data
+    writeToCache(details);
+    // set and forget. doesn't matter that cache is not bulletproof
+
+    return details;
   });
 }
 
@@ -119,7 +142,6 @@ function fetchedPokemonDetailsAction(name, details) {
 function pokemonListThunk() {
   return async (dispatch, getState) => {
     const list = await fetchPokemonList();
-    console.log(list);
     dispatch(pokemonListInsertAction(list));
     const { pokemon } = getState();
 
