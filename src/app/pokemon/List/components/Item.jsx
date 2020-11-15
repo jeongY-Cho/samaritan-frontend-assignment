@@ -15,13 +15,14 @@ const ListItem = ({ name }) => {
   }, [name]);
 
   return (
-    <div className="pokemon-list-items">
-      <div
-        onClick={goToDetails}
-        tabIndex={0}
-        onKeyPress={goToDetails}
-        role="button"
-      >
+    <div
+      className="pokemon-list-items"
+      onClick={goToDetails}
+      tabIndex={0}
+      onKeyPress={goToDetails}
+      role="button"
+    >
+      <div>
         {details.id ? (
           <div>
             <img
