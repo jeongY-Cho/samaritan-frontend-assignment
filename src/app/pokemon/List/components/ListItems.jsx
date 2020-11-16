@@ -149,11 +149,17 @@ function pokemonListThunk() {
     // eslint-disable-next-line no-restricted-syntax
     for (const each of Object.values(pokemon)) {
       if (each.status !== "success") {
-        dispatch(fetchingPokemonDetailsAction(each.name));
-        fetchPokemonDetails(each.name).then((details) => {
-          dispatch(fetchedPokemonDetailsAction(each.name, details));
-        });
+        dispatch(pokemonDetailsThunk(each.name));
       }
     }
+  };
+}
+
+export function pokemonDetailsThunk(name) {
+  return async (dispatch) => {
+    dispatch(fetchingPokemonDetailsAction(name));
+    fetchPokemonDetails(name).then((details) => {
+      dispatch(fetchedPokemonDetailsAction(name, details));
+    });
   };
 }
