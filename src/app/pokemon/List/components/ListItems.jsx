@@ -14,8 +14,8 @@ export default () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!Object.keys(pokemons).length) dispatch(pokemonListThunk());
-  }, [pokemons]);
+    dispatch(pokemonListThunk());
+  }, []);
 
   return (
     <div className="pokemon-list">
