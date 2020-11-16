@@ -1,6 +1,23 @@
 .filter-container {
+  background: whitesmoke;
+  display: flex;
+  align-items: center;
+
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.filter-container:focus-within {
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  padding: 9px;
 }
 
 .filter-input {
   outline: none;
+  padding: 10px;
+
+  background: whitesmoke;
+  border-width: 0;
 }

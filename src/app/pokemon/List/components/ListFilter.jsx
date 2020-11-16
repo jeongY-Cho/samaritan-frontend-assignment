@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+/* eslint-disable no-unused-expressions */
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,6 +10,8 @@ export default () => {
   const dispatch = useDispatch();
 
   const [inputValue, setInputValue] = useState(filterValue);
+
+  const inputRef = useRef(null);
 
   useEffect(() => {
     setInputValue(filterValue);
@@ -24,14 +27,28 @@ export default () => {
   }, []);
 
   return (
-    <div className="filter-container">
-      <input
-        type="text"
-        placeholder="Search"
-        className="filter-input"
-        value={inputValue}
-        onChange={onChangeCallback}
-      />
+    <div
+      className="filter-container"
+      onClick={() => {
+        inputRef.current && inputRef.current.focus();
+      }}
+      role="textbox"
+      onKeyPress={() => {
+        inputRef.current && inputRef.current.focus();
+      }}
+      tabIndex={0}
+    >
+      <div data-icon="ei-search" data-size="m" />
+      <div>
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Filter"
+          className="filter-input"
+          value={inputValue}
+          onChange={onChangeCallback}
+        />
+      </div>
     </div>
   );
 };
