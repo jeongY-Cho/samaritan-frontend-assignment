@@ -37,9 +37,8 @@ const ListItem = ({ name }) => {
         )}
       </div>
       <div className="id-and-name">
-        <div style={{ "padding-right": 20 }}>
-          # <br />
-          {String(details.id).padStart(3, "0")}
+        <div style={{ "padding-right": 20, fontSize: "0.9rem" }}>
+          #{String(details.id).padStart(3, "0")}
         </div>
         <div style={{ wordBreak: "break-all" }}>
           <h3>{details.name && titleCase(details.name)}</h3>
