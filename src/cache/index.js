@@ -29,13 +29,12 @@ export function fetchFromCache(key) {
 
       const transaction = db.transaction(["details"], "readonly");
       const store = transaction.objectStore("details");
-
       let getDetails;
-      if (typeof key === "string") {
+      if (/^[0-9]*$/.test(key)) {
+        getDetails = store.get(Number(key));
+      } else {
         const index = store.index("name");
         getDetails = index.get(key);
-      } else {
-        getDetails = store.get(key);
       }
 
       // treat errors as cache misses
