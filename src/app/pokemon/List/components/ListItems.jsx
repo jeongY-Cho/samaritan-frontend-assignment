@@ -94,6 +94,7 @@ export function pokemonListReducer(state = {}, action) {
       const pokemon = {
         ...state[action.name],
         status: "loading",
+        name: action.name,
       };
 
       return {
