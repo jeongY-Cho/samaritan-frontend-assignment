@@ -2,6 +2,7 @@
 /* eslint-disable no-shadow */
 const DB_NAME = "Pokemon";
 
+// setup indexedDB
 const req = window.indexedDB.open(DB_NAME);
 
 req.onupgradeneeded = (event) => {
@@ -13,8 +14,10 @@ req.onupgradeneeded = (event) => {
   objectStore.createIndex("name", "name", { unique: true });
 };
 
+// fetch cached pokemon details
 export function fetchFromCache(key) {
   return new Promise((resolve) => {
+    // open db
     const request = window.indexedDB.open(DB_NAME);
 
     // console.log errors and treat them as cache misses.
@@ -27,12 +30,18 @@ export function fetchFromCache(key) {
     request.onsuccess = (ev) => {
       const db = ev.target.result;
 
+      // start transaction
       const transaction = db.transaction(["details"], "readonly");
+      // get store
       const store = transaction.objectStore("details");
+      // details var
       let getDetails;
+
+      // if key is a string of numbers then get by id
       if (/^[0-9]*$/.test(key)) {
         getDetails = store.get(Number(key));
       } else {
+        // if its not a string of numbers then assume its a name and retrieve by name
         const index = store.index("name");
         getDetails = index.get(key);
       }
@@ -50,6 +59,9 @@ export function fetchFromCache(key) {
   });
 }
 
+// write to cache
+// set and forget, ignore errors,
+// this cache doesn't need to guarantee data
 export function writeToCache(details) {
   return new Promise((resolve, reject) => {
     const openDB = window.indexedDB.open(DB_NAME);
@@ -73,6 +85,7 @@ export function writeToCache(details) {
   });
 }
 
+// clear cache
 export function clearCache() {
   const DBOpenRequest = window.indexedDB.open(DB_NAME);
 

@@ -6,10 +6,10 @@ import { setOptionThunk } from "./actions";
 export default () => {
   const dispatch = useDispatch();
 
-  const deepFilter = useSelector((state) => state.settings.deepFilter);
-  const useIndexedDB = useSelector((state) => state.settings.useIndexedDB);
-  const detailsOnHover = useSelector((state) => state.settings.detailsOnHover);
-  const paginate = useSelector((state) => state.settings.paginate);
+  // get settings
+  const { deepFilter, useIndexedDB, detailsOnHover, paginate } = useSelector(
+    (state) => state.settings
+  );
 
   return (
     <div>

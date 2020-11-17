@@ -6,23 +6,33 @@ import { useDispatch, useSelector } from "react-redux";
 import "./ListFilter.css";
 
 export default () => {
+  // filter value
   const filterValue = useSelector((state) => state.filter);
+
+  // get dispatch function for store
   const dispatch = useDispatch();
 
+  // value for input
   const [inputValue, setInputValue] = useState(filterValue);
 
+  // reference for input
   const inputRef = useRef(null);
 
+  // synchronize input with filter in state
   useEffect(() => {
     setInputValue(filterValue);
   }, [filterValue]);
 
+  // debounce the filtering
   const debouncedUpdateFilter = debounce((e) => {
     dispatch(setFilter(e.target.value));
   }, 200);
 
+  // callback to change
   const onChangeCallback = useCallback((e) => {
+    // set input directly will sync with state eventually
     setInputValue(e.target.value);
+    // debounce the filter input
     debouncedUpdateFilter(e);
   }, []);
 

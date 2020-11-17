@@ -11,10 +11,13 @@ import "./HoverDetails.css";
 export default function HoverDetails({ initialPos, name }) {
   const { x, y } = useMousePosition(initialPos.x, initialPos.y);
 
+  // get details for the pokemon
+  // expect that details exist
   const details = useSelector((state) => state.pokemon[name].details);
 
   return (
     <div className="hover-details" style={{ left: x, top: y }}>
+      {/* don't show img for the hover */}
       <DetailsOverview details={details} hideImg />
     </div>
   );

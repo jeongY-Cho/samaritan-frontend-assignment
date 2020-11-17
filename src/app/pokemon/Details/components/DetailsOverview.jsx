@@ -5,6 +5,7 @@ import titleCase from "../../../../utils/titleCase";
 export default function DetailsOverview({ details, hideImg }) {
   return (
     <div className="details-overview">
+      {/* hide img toggle. */}
       <div style={{ display: hideImg ? "none" : null }}>
         <img
           width="300px"

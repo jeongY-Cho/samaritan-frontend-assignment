@@ -9,20 +9,27 @@ import ListItem from "./Item";
 import "./ListItems.css";
 
 export default () => {
+  // filtervalue from state
   const filterValue = useSelector((state) => state.filter);
+  // get list of all loaded pokemon
   const pokemons = useSelector((state) => state.pokemon);
+  // get setting for filter type
   const filterDeeply = useSelector((state) => state.settings.deepFilter);
+  // get setting for pagination
   const paginate = useSelector((state) => state.settings.paginate);
+  // reference for current "page"
   const page = useRef(0);
 
   const dispatch = useDispatch();
 
+  // get next page
   const loadMore = (e) => {
     e.preventDefault();
     // eslint-disable-next-line no-plusplus
     dispatch(pokemonListThunk(++page.current));
   };
 
+  // get first page on mount
   useEffect(() => {
     dispatch(pokemonListThunk());
   }, []);
@@ -45,6 +52,7 @@ export default () => {
             return <ListItem key={pokemon.name} name={pokemon.name} />;
           })}
       </div>
+      {/* only show load more if pagination is turned on */}
       {paginate && (
         <button className="load-more-button" onClick={loadMore}>
           Load More

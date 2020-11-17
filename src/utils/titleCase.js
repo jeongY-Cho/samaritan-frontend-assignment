@@ -1,3 +1,4 @@
+// title case strings
 export default (str) => {
   return str
     .split(" ")

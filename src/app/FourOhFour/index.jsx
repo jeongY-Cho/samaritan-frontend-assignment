@@ -4,12 +4,15 @@ import { useHistory } from "react-router-dom";
 import "./index.css";
 
 export default () => {
+  // history to nav buttons
   const history = useHistory();
 
+  // callback to go back
   const backCallback = useCallback(() => {
     history.goBack();
   }, []);
 
+  // callback to go home
   const homeCallback = useCallback(() => {
     history.push("/");
   }, []);

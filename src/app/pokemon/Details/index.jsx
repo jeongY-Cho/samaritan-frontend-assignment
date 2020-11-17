@@ -17,39 +17,54 @@ export default () => {
   const pokemon = useSelector((state) => state.pokemon[resolvedName]);
   const dispatch = useDispatch();
 
+  // effect to resolve number id links.
   useEffect(() => {
+    // fetch the pokemon details if there is nothing for the name param
     if (!pokemon) {
       dispatch(pokemonDetailsThunk(resolvedName));
       return () => {};
     }
 
+    // no-op if loading
     if (pokemon.status === "loading") return () => {};
+    // if loading success set new title
     if (pokemon.status === "success") {
       document.title = `${titleCase(resolvedName)} | Samaritan Pokedex`;
+      // reset title on unmount
       return () => {
         document.title = `Samaritan Pokedex`;
       };
     }
 
+    // if the pokemon is a reference then take the ref
     if (pokemon.match("$$")) {
       history.replace(`/pokemon/${pokemon.slice(2)}`);
     }
     return () => {};
   }, [pokemon]);
+  // this effect should fire every time the pokemon object changes
 
+  // effect should fire when resolvedName doesn't match the param
   useEffect(() => {
     if (match.params.name !== resolvedName) {
       history.replace(`/pokemon/${resolvedName}`);
     }
   }, [match]);
 
+  // callback for the next pokemon
   const nextPokemon = () => {
+    // increment the id to go next
     history.push(`/pokemon/${pokemon.details.id + 1}`);
+    // use id instead of name because easier
+    // would need to have the list of pokemon already loaded
   };
+  // callback for the previous pokemon
   const previousPokemon = () => {
+    // increment id to go before
     history.push(`/pokemon/${pokemon.details.id - 1}`);
   };
 
+  // if loading then show loading
   if (!pokemon || pokemon.status !== "success") {
     return <div>Loading</div>;
   }
@@ -59,7 +74,9 @@ export default () => {
   return (
     <div className="details-container">
       <div className="details-jumbotron">
+        {/* hide previous button if current pokemon id == 1 */}
         {details.id === 1 ? (
+          // show a same sized but transparent div for consistent spacing
           <div style={{ height: 160, width: 160 }} />
         ) : (
           <div
@@ -122,7 +139,6 @@ export default () => {
             <ul>
               {details.abilities.map((ability) => (
                 <li key={ability.ability.name}>
-                  {" "}
                   {titleCase(ability.ability.name.replace("-", " "))}
                 </li>
               ))}
