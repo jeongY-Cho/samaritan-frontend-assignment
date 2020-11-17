@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import promiseRetry from "promise-retry";
 
@@ -12,36 +12,57 @@ export default () => {
   const filterValue = useSelector((state) => state.filter);
   const pokemons = useSelector((state) => state.pokemon);
   const filterDeeply = useSelector((state) => state.settings.deepFilter);
+  const paginate = useSelector((state) => state.settings.paginate);
+  const page = useRef(0);
 
   const dispatch = useDispatch();
+
+  const loadMore = (e) => {
+    e.preventDefault();
+    // eslint-disable-next-line no-plusplus
+    dispatch(pokemonListThunk(++page.current));
+  };
+
   useEffect(() => {
     dispatch(pokemonListThunk());
   }, []);
 
   return (
-    <div className="pokemon-list">
-      {Object.values(pokemons)
-        .filter((a) => {
-          return typeof a !== "string" && a.details;
-        })
-        .filter((a) => {
-          const testAgainst = filterDeeply ? JSON.stringify(a) : a.name;
-          return RegExp(filterValue, "i").test(testAgainst);
-        })
-        .sort((a, b) => {
-          return a.details.id - b.details.id;
-        })
-        .map((pokemon) => {
-          return <ListItem key={pokemon.name} name={pokemon.name} />;
-        })}
+    <div className="pokemon-list-container">
+      <div className="pokemon-list">
+        {Object.values(pokemons)
+          .filter((a) => {
+            return typeof a !== "string" && a.details;
+          })
+          .filter((a) => {
+            const testAgainst = filterDeeply ? JSON.stringify(a) : a.name;
+            return RegExp(filterValue, "i").test(testAgainst);
+          })
+          .sort((a, b) => {
+            return a.details.id - b.details.id;
+          })
+          .map((pokemon) => {
+            return <ListItem key={pokemon.name} name={pokemon.name} />;
+          })}
+      </div>
+      {paginate && (
+        <button className="load-more-button" onClick={loadMore}>
+          Load More
+        </button>
+      )}
     </div>
   );
 };
 
 // TODO: move fetch stuff somewhere else
-function fetchPokemonList() {
+function fetchPokemonList(page = 0, paginate = true) {
   return promiseRetry(async (retry) => {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${20}`);
+    const offset = paginate ? page * 20 : 0;
+    const limit = paginate ? 20 : 151;
+    console.log(paginate, offset);
+    const res = await fetch(
+      `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+    );
 
     if (!res.ok) retry();
 
@@ -155,9 +176,13 @@ function fetchedPokemonDetailsAction(name, details) {
   };
 }
 
-function pokemonListThunk() {
+function pokemonListThunk(page = 0) {
   return async (dispatch, getState) => {
-    const list = await fetchPokemonList();
+    const {
+      settings: { paginate },
+    } = getState();
+    console.log(getState());
+    const list = await fetchPokemonList(page, paginate);
     dispatch(pokemonListInsertAction(list));
     const {
       pokemon,

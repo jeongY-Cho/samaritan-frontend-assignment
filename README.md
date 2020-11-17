@@ -19,6 +19,7 @@ Technical frontend assignment for Samaritan
 - failed fetch retry (promiseRetry)
 - ~~infinite scrolling~~
   - some bug didn't update state, couldn't make my own implementation
+  - use normal pagination instead
 - ~~loading animations~~
   - data load quick enough
 - js Map obj >> obj literal

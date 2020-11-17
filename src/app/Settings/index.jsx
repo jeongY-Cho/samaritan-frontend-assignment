@@ -9,6 +9,7 @@ export default () => {
   const deepFilter = useSelector((state) => state.settings.deepFilter);
   const useIndexedDB = useSelector((state) => state.settings.useIndexedDB);
   const detailsOnHover = useSelector((state) => state.settings.detailsOnHover);
+  const paginate = useSelector((state) => state.settings.paginate);
 
   return (
     <div>
@@ -52,6 +53,20 @@ export default () => {
             checked={detailsOnHover}
             onChange={() => {
               dispatch(setOptionThunk("detailsOnHover", !detailsOnHover));
+            }}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="paginate">
+          Paginate?
+          <input
+            type="checkbox"
+            name="paginate"
+            id="paginate"
+            checked={paginate}
+            onChange={() => {
+              dispatch(setOptionThunk("paginate", !paginate));
             }}
           />
         </label>

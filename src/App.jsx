@@ -1,21 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import PokemonDetails from "./app/pokemon/Details";
 import PokemonList from "./app/pokemon/List";
 import Settings from "./app/Settings";
 import FourOhFour from "./app/FourOhFour";
-import { setInitialSettingsThunk } from "./app/Settings/actions";
 
 import "./App.css";
 
 export default () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setInitialSettingsThunk());
-  }, []);
-
   return (
     <div className="app">
       <BrowserRouter>
