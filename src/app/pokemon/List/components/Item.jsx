@@ -23,18 +23,14 @@ const ListItem = ({ name }) => {
       role="button"
     >
       <div>
-        {details.id ? (
-          <div>
-            <img
-              width="180px"
-              src={`https://pokeres.bastionbot.org/images/pokemon/${details.id}.png`}
-              alt={details.name}
-              className="pokemon-portrait"
-            />
-          </div>
-        ) : (
-          <div className="img-placeholder">Loading</div>
-        )}
+        <div>
+          <img
+            width="180px"
+            src={`https://pokeres.bastionbot.org/images/pokemon/${details.id}.png`}
+            alt={details.name}
+            className="pokemon-portrait"
+          />
+        </div>
       </div>
       <div className="id-and-name">
         <div style={{ "padding-right": 20, fontSize: "0.9rem" }}>
