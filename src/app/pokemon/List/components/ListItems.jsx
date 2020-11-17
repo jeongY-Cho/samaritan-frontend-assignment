@@ -41,7 +41,7 @@ export default () => {
 // TODO: move fetch stuff somewhere else
 function fetchPokemonList() {
   return promiseRetry(async (retry) => {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${151}`);
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${20}`);
 
     if (!res.ok) retry();
 

@@ -49,7 +49,7 @@ Technical frontend assignment for Samaritan
 - [ ] ~~3D sprites~~ sprite viewer
 - [x] Next/prev navigation in details view
 - [x] more capable filter
-- [ ] "quick view" (toggle)
+- [x] "quick view" (toggle)
 
 ---
 

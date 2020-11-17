@@ -1,14 +1,22 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import PropTypes from "prop-types";
-
-import "./Item.css";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+import HoverDetails from "./HoverDetails";
+
 import titleCase from "../../../../utils/titleCase";
+
+import "./Item.css";
 
 const ListItem = ({ name }) => {
   const history = useHistory();
   const details = useSelector((state) => state.pokemon[name].details);
+  const detailsOnHover = useSelector((state) => state.settings.detailsOnHover);
+
+  const [hoverDetail, showDetail] = useState(false);
+  const timeout = useRef(null);
+  const initialPos = useRef({ x: null, y: null });
 
   const goToDetails = useCallback(() => {
     history.push(`/pokemon/${name}`);
@@ -21,6 +29,22 @@ const ListItem = ({ name }) => {
       tabIndex={0}
       onKeyPress={goToDetails}
       role="button"
+      onMouseEnter={(ev) => {
+        initialPos.current = {
+          x: ev.clientX,
+          y: ev.clientY,
+        };
+        if (detailsOnHover) {
+          // eslint-disable-next-line no-const-assign
+          timeout.current = setTimeout(() => {
+            showDetail(true);
+          }, 500);
+        }
+      }}
+      onMouseLeave={() => {
+        clearTimeout(timeout.current);
+        showDetail(false);
+      }}
     >
       <div>
         <div>
@@ -40,6 +64,9 @@ const ListItem = ({ name }) => {
           <h3>{details.name && titleCase(details.name)}</h3>
         </div>
       </div>
+      {hoverDetail && (
+        <HoverDetails name={name} initialPos={initialPos.current} />
+      )}
     </div>
   );
 };

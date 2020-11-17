@@ -8,8 +8,8 @@ export default () => {
 
   const deepFilter = useSelector((state) => state.settings.deepFilter);
   const useIndexedDB = useSelector((state) => state.settings.useIndexedDB);
+  const detailsOnHover = useSelector((state) => state.settings.detailsOnHover);
 
-  console.log(JSON.stringify(deepFilter), useIndexedDB);
   return (
     <div>
       <h1>Settings</h1>
@@ -38,6 +38,20 @@ export default () => {
             checked={useIndexedDB}
             onChange={() => {
               dispatch(setOptionThunk("useIndexedDB", !useIndexedDB));
+            }}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="detailsOnHover">
+          Quick detail view on hover?
+          <input
+            type="checkbox"
+            name="detailsOnHover"
+            id="detailsOnHover"
+            checked={detailsOnHover}
+            onChange={() => {
+              dispatch(setOptionThunk("detailsOnHover", !detailsOnHover));
             }}
           />
         </label>
