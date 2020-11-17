@@ -41,10 +41,6 @@ Technical frontend assignment for Samaritan
 - cache location?
   - directly in state vs indexedDB
 
-## Bonus Points?:
-
-- tests?
-
 ## Fun Additions:
 
 - [ ] ~~3D sprites~~ sprite viewer
