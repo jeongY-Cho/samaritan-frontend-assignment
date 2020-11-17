@@ -17,7 +17,8 @@ Technical frontend assignment for Samaritan
   - small app anyways
 - debounce filter (lodash)
 - failed fetch retry (promiseRetry)
-- infinite scrolling
+- ~~infinite scrolling~~
+  - some bug didn't update state, couldn't make my own implementation
 - ~~loading animations~~
   - data load quick enough
 - js Map obj >> obj literal
@@ -34,7 +35,8 @@ Technical frontend assignment for Samaritan
 
 ## Additional Considerations (implement as feature toggles)
 
-- lazy vs eager loading/caching
+- ~~lazy vs eager loading/caching~~
+  - irrelevant without pagination
 - cache location?
   - directly in state vs indexedDB
 
@@ -46,7 +48,7 @@ Technical frontend assignment for Samaritan
 
 - [ ] ~~3D sprites~~ sprite viewer
 - [x] Next/prev navigation in details view
-- [ ] more capable filter
+- [x] more capable filter
 - [ ] "quick view" (toggle)
 
 ---

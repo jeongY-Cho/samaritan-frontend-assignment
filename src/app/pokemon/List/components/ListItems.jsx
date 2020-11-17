@@ -39,11 +39,9 @@ export default () => {
 };
 
 // TODO: move fetch stuff somewhere else
-function fetchPokemonList(page = 0) {
+function fetchPokemonList() {
   return promiseRetry(async (retry) => {
-    const res = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?offset=${page * 20}`
-    );
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${151}`);
 
     if (!res.ok) retry();
 
