@@ -26,9 +26,12 @@ export default () => {
         .filter((a) => {
           return RegExp(filterValue, "i").test(a.name);
         })
-        .map((pokemon, i) => (
-          <ListItem key={pokemon.name} i={i} name={pokemon.name} />
-        ))}
+        .sort((a, b) => {
+          return a.details.id - b.details.id;
+        })
+        .map((pokemon) => {
+          return <ListItem key={pokemon.name} name={pokemon.name} />;
+        })}
     </div>
   );
 };
@@ -88,7 +91,6 @@ export function pokemonListReducer(state = {}, action) {
             error: null,
             name: cur.name,
             url: cur.url,
-            details: {},
           };
           return acc;
         }, {}),
