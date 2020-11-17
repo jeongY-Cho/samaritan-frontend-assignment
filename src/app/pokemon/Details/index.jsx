@@ -22,6 +22,13 @@ export default () => {
     }
   }, [match]);
 
+  const nextPokemon = () => {
+    history.push(`/pokemon/${pokemon.details.id + 1}`);
+  };
+  const previousPokemon = () => {
+    history.push(`/pokemon/${pokemon.details.id - 1}`);
+  };
+
   if (!pokemon || pokemon.status !== "success") {
     return <div>Loading</div>;
   }
@@ -31,17 +38,27 @@ export default () => {
   return (
     <div className="details-container">
       <div className="details-jumbotron">
-        <div className="nav-triangle" data-direction="Previous">
+        {details.id === 1 ? (
+          <div style={{ height: 160, width: 160 }} />
+        ) : (
           <div
-            style={{
-              display: details.id === 1 ? "none" : null,
-              transform: "rotate(30deg) scale(0.2)",
-              cursor: "pointer",
-            }}
+            className="nav-triangle"
+            data-direction="Previous"
+            onClick={previousPokemon}
+            role="button"
+            onKeyPress={previousPokemon}
+            tabIndex={0}
           >
-            <div className="triangle" />
+            <div
+              style={{
+                transform: "rotate(30deg) scale(0.2)",
+                cursor: "pointer",
+              }}
+            >
+              <div className="triangle" />
+            </div>
           </div>
-        </div>
+        )}
         <div className="details-overview">
           <div>
             <img
@@ -67,7 +84,14 @@ export default () => {
             <div>Weight: {details.height}</div>
           </div>
         </div>
-        <div className="nav-triangle" data-direction="Next">
+        <div
+          className="nav-triangle"
+          data-direction="Next"
+          onClick={nextPokemon}
+          onKeyPress={nextPokemon}
+          tabIndex={0}
+          role="button"
+        >
           <div
             style={{
               transform: "rotate(-30deg) scale(0.2)",
