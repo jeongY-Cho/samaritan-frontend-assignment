@@ -18,12 +18,16 @@ Technical frontend assignment for Samaritan
 - debounce filter (lodash)
 - failed fetch retry (promiseRetry)
 - infinite scrolling
-- loading animations
+- ~~loading animations~~
+  - data load quick enough
 - js Map obj >> obj literal
+  - can't b/c redux only wants serializable data.
+  - marginal gains anyways
 - wireframe + style w/ figma
 - sprites return 404 from pokeapi
   - https://pokeres.bastionbot.org/images/pokemon/###.png has modern sprites
     - should cache w/ cache API
+  - some other links are fine. but bastionbot imgs are nice.
 - pokeapi is case sensitive. validate uri param.
 - pokemon num padStart
 - evil-icons.io
@@ -40,10 +44,10 @@ Technical frontend assignment for Samaritan
 
 ## Fun Additions:
 
-- 3D sprites
-- Next/prev navigation in details view
-- more capable filter
-- "quick view" (toggle)
+- [ ] ~~3D sprites~~ sprite viewer
+- [x] Next/prev navigation in details view
+- [ ] more capable filter
+- [ ] "quick view" (toggle)
 
 ---
 
