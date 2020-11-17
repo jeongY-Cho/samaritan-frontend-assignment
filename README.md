@@ -12,7 +12,7 @@ npm i
 npm run build
 
 # and serve with:
-npx serve ./dist
+npx serve ./dist -s
 ```
 
 ## Launch dev server
@@ -21,6 +21,15 @@ npx serve ./dist
 npm i
 npm start
 ```
+
+## _Notes_
+
+- turning off all settings (default), the app behaves exactly as the specs specify.
+- additional features:
+  - filter option: filter searches the serialized JSON of pokmeon details for matches
+  - cache option: requests for pokemon details are cached into `IndexedDB`
+  - quick detail option: hovering on the pokemon list item shows a quick view.
+  - paginate option: pokemon list is paginated instead of showing all 151 at once.
 
 ---
 
