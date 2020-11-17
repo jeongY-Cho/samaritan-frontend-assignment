@@ -11,6 +11,7 @@ import "./ListItems.css";
 export default () => {
   const filterValue = useSelector((state) => state.filter);
   const pokemons = useSelector((state) => state.pokemon);
+  const filterDeeply = useSelector((state) => state.settings.deepFilter);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -24,7 +25,8 @@ export default () => {
           return typeof a !== "string" && a.details;
         })
         .filter((a) => {
-          return RegExp(filterValue, "i").test(a.name);
+          const testAgainst = filterDeeply ? JSON.stringify(a) : a.name;
+          return RegExp(filterValue, "i").test(testAgainst);
         })
         .sort((a, b) => {
           return a.details.id - b.details.id;
@@ -52,17 +54,20 @@ function fetchPokemonList(page = 0) {
 // fetchPokemonDetails fetches details for each pokemon
 // first checks indexed db for cached details.
 // if cache miss, fetches then caches and returns fetched details
-function fetchPokemonDetails(name) {
+function fetchPokemonDetails(name, useCache = true) {
   return promiseRetry(async (retry) => {
-    // check cache first
-    const cachedRes = await fetchFromCache(name);
+    // if indexedDB is enabled use it
+    if (useCache) {
+      // check cache first
+      const cachedRes = await fetchFromCache(name);
 
-    // return cached object on cache hit
-    if (cachedRes) return cachedRes;
-    // don't need to check with api since we can safely assume, in this specific context,
-    // details won't change.
-    // For some production app, embed a timestamp into cached object and fetch if its older than some
-    // threshold.
+      // return cached object on cache hit
+      if (cachedRes) return cachedRes;
+      // don't need to check with api since we can safely assume, in this specific context,
+      // details won't change.
+      // For some production app, embed a timestamp into cached object and fetch if its older than some
+      // threshold.
+    }
 
     // fetch from api on cache miss
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
@@ -72,9 +77,12 @@ function fetchPokemonDetails(name) {
 
     const details = await res.json();
 
-    // cache newly fetched data
-    writeToCache(details);
-    // set and forget. doesn't matter that cache is not bulletproof
+    // if indexedDB is enabled use it
+    if (useCache) {
+      // cache newly fetched data
+      writeToCache(details);
+      // set and forget. doesn't matter that cache is not bulletproof
+    }
 
     return details;
   });
@@ -153,21 +161,24 @@ function pokemonListThunk() {
   return async (dispatch, getState) => {
     const list = await fetchPokemonList();
     dispatch(pokemonListInsertAction(list));
-    const { pokemon } = getState();
+    const {
+      pokemon,
+      settings: { useIndexedDB },
+    } = getState();
 
     // eslint-disable-next-line no-restricted-syntax
     for (const each of Object.values(pokemon)) {
       if (each.status !== "success") {
-        dispatch(pokemonDetailsThunk(each.name));
+        dispatch(pokemonDetailsThunk(each.name, useIndexedDB));
       }
     }
   };
 }
 
-export function pokemonDetailsThunk(name) {
+export function pokemonDetailsThunk(name, useCache = true) {
   return async (dispatch) => {
     dispatch(fetchingPokemonDetailsAction(name));
-    fetchPokemonDetails(name).then((details) => {
+    fetchPokemonDetails(name, useCache).then((details) => {
       dispatch(fetchedPokemonDetailsAction(name, details));
     });
   };

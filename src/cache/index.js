@@ -73,4 +73,13 @@ export function writeToCache(details) {
   });
 }
 
-window.writeToCache = writeToCache;
+export function clearCache() {
+  const DBOpenRequest = window.indexedDB.open(DB_NAME);
+
+  DBOpenRequest.onsuccess = (e) => {
+    const db = e.target.result;
+    const transaction = db.transaction(["details"], "readwrite");
+
+    transaction.objectStore("details").clear();
+  };
+}

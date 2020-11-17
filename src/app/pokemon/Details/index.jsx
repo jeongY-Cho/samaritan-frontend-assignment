@@ -125,7 +125,7 @@ export default () => {
           <div>
             <h2>Moves</h2>
           </div>
-          <div>
+          <div style={{ height: 300, overflow: "auto" }}>
             <ul>
               {details.moves.map((move) => (
                 <li key={move.move.name}>
