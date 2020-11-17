@@ -15,8 +15,26 @@ export default () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(resolvedName);
-    dispatch(pokemonDetailsThunk(resolvedName));
+    if (!pokemon) {
+      dispatch(pokemonDetailsThunk(resolvedName));
+      return () => {};
+    }
+
+    if (pokemon.status === "loading") return () => {};
+    if (pokemon.status === "success") {
+      document.title = `${titleCase(resolvedName)} | Samaritan Pokedex`;
+      return () => {
+        document.title = `Samaritan Pokedex`;
+      };
+    }
+
+    if (pokemon.match("$$")) {
+      history.replace(`/pokemon/${pokemon.slice(2)}`);
+    }
+    return () => {};
+  }, [pokemon]);
+
+  useEffect(() => {
     if (match.params.name !== resolvedName) {
       history.replace(`/pokemon/${resolvedName}`);
     }

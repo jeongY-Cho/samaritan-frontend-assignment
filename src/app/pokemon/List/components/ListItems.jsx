@@ -21,6 +21,9 @@ export default () => {
     <div className="pokemon-list">
       {Object.values(pokemons)
         .filter((a) => {
+          return typeof a !== "string" && a.details;
+        })
+        .filter((a) => {
           return RegExp(filterValue, "i").test(a.name);
         })
         .map((pokemon, i) => (
@@ -106,13 +109,17 @@ export function pokemonListReducer(state = {}, action) {
       const pokemon = {
         ...state[action.name],
         status: "success",
+        name: action.details.name,
         details: action.details,
       };
-
-      return {
+      const retState = {
         ...state,
-        [action.name]: pokemon,
+        [action.details.name]: pokemon,
       };
+      if (action.name !== action.details.name) {
+        retState[action.name] = `$$${action.details.name}`;
+      }
+      return retState;
     }
     default:
       return state;
