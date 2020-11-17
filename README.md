@@ -2,6 +2,26 @@
 
 Technical frontend assignment for Samaritan
 
+## Build and run
+
+```bash
+# first install dependencies with:
+npm i
+
+# then:
+npm run build
+
+# and serve with:
+npx serve ./dist
+```
+
+## Launch dev server
+
+```
+npm i
+npm start
+```
+
 ---
 
 ## Requirements:
