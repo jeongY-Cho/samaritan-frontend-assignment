@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, useHistory } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import titleCase from "../../../utils/titleCase";
 import resolveName from "../../../utils/resolveName";
 
 import "./index.css";
+import SpriteList from "./components/SpriteList";
 
 export default () => {
   const match = useRouteMatch();
@@ -16,6 +17,9 @@ export default () => {
   const resolvedName = resolveName(match.params.name);
   const pokemon = useSelector((state) => state.pokemon[resolvedName]);
   const dispatch = useDispatch();
+  const [activeSprite, setSprite] = useState(null);
+
+  const spriteViewer = useSelector((state) => state.settings.spriteViewer);
 
   // effect to resolve number id links.
   useEffect(() => {
@@ -146,6 +150,29 @@ export default () => {
           </div>
         </div>
       </div>
+      {spriteViewer && (
+        <div className="sprite-viewer">
+          <div style={{ gridColumn: "1 / 3" }}>
+            <h2>Sprites:</h2>
+          </div>
+          <SpriteList
+            sprites={details.sprites}
+            showSpriteURI={setSprite}
+            activeSprite={activeSprite}
+          />
+          <div>
+            {activeSprite ? (
+              <img
+                src={activeSprite}
+                alt={`Sprite for ${resolveName}`}
+                className="sprite-img"
+              />
+            ) : (
+              <div>Select a sprite from the list on the left</div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

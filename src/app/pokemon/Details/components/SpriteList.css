@@ -1,0 +1,12 @@
+.sprite-button {
+  color: white;
+  background: rgb(94, 94, 94);
+  outline: none;
+}
+
+.sprite-button.active {
+  color: black;
+  background: whitesmoke;
+  padding: 2px;
+  margin: 1px;
+}

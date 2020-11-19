@@ -7,9 +7,13 @@ export default () => {
   const dispatch = useDispatch();
 
   // get settings
-  const { deepFilter, useIndexedDB, detailsOnHover, paginate } = useSelector(
-    (state) => state.settings
-  );
+  const {
+    deepFilter,
+    useIndexedDB,
+    detailsOnHover,
+    paginate,
+    spriteViewer,
+  } = useSelector((state) => state.settings);
 
   return (
     <div>
@@ -67,6 +71,20 @@ export default () => {
             checked={paginate}
             onChange={() => {
               dispatch(setOptionThunk("paginate", !paginate));
+            }}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="spriteViewer">
+          Load sprite viewer?
+          <input
+            type="checkbox"
+            name="spriteViewer"
+            id="spriteViewer"
+            checked={spriteViewer}
+            onChange={() => {
+              dispatch(setOptionThunk("spriteViewer", !spriteViewer));
             }}
           />
         </label>
