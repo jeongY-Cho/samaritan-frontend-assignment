@@ -52,8 +52,8 @@ export default () => {
             return <ListItem key={pokemon.name} name={pokemon.name} />;
           })}
       </div>
-      {/* only show load more if pagination is turned on */}
-      {paginate && (
+      {/* only show load more if pagination is turned on and if count below 151 */}
+      {paginate && Object.keys(pokemons).length < 151 && (
         <button className="load-more-button" onClick={loadMore}>
           Load More
         </button>
@@ -66,8 +66,7 @@ export default () => {
 function fetchPokemonList(page = 0, paginate = true) {
   return promiseRetry(async (retry) => {
     const offset = paginate ? page * 20 : 0;
-    const limit = paginate ? 20 : 151;
-    console.log(paginate, offset);
+    const limit = paginate ? Math.min(20, 151 - offset) : 151;
     const res = await fetch(
       `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
     );
@@ -189,7 +188,6 @@ function pokemonListThunk(page = 0) {
     const {
       settings: { paginate },
     } = getState();
-    console.log(getState());
     const list = await fetchPokemonList(page, paginate);
     dispatch(pokemonListInsertAction(list));
     const {
