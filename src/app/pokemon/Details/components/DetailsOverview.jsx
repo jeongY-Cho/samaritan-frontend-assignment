@@ -9,7 +9,7 @@ export default function DetailsOverview({ details, hideImg }) {
       <div style={{ display: hideImg ? "none" : null }}>
         <img
           width="300px"
-          src={`https://pokeres.bastionbot.org/images/pokemon/${details.id}.png`}
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${details.id}.png`}
           alt={details.name}
           className="pokemon-portrait"
         />

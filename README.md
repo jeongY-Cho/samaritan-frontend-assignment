@@ -57,8 +57,9 @@ npm start
 - wireframe + style w/ figma
 - sprites return 404 from pokeapi
   - https://pokeres.bastionbot.org/images/pokemon/###.png has modern sprites
-    - should cache w/ cache API
+    - ~~should cache w/ cache API~~ browser can decide to cache
   - some other links are fine. but bastionbot imgs are nice.
+    - found bastionbot imgs on pokeapi.
 - pokeapi is case sensitive. validate uri param.
 - pokemon num padStart
 - evil-icons.io
